@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test-pack-publish:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do repositório
@@ -28,8 +28,7 @@ jobs:
         run: dotnet test --configuration Release --no-build
                 
       - name: Empacotar (dotnet pack)
-        run: dotnet pack --configuration Release --no-build -o ./nupkgs     
-
+        run: dotnet pack --configuration Release --no-build -o ./nupkgs
+        
       - name: Publicar no NuGet
-        run: |
-         for %%f in (./nupkgs/*.nupkg) do dotnet nuget push "%%f" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
