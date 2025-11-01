@@ -1,4 +1,4 @@
-name: Canducci.OpenZip
+name: Canducci.Validations
 
 on:
   workflow_dispatch:
@@ -26,3 +26,9 @@ jobs:
 
       - name: Testes
         run: dotnet test --configuration Release --no-build
+                
+      - name: Empacotar (dotnet pack)
+        run: dotnet pack --configuration Release --no-build -o ./nupkgs
+
+      - name: Publicar no NuGet
+        run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
