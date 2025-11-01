@@ -19,16 +19,19 @@ Pacote de validação customizadas para **ASP.NET Core MVC** e **.NET Standard**
 ## 📦 Instalação
 
 ### Via NuGet Package Manager
+
 ```bash
 Install-Package Canducci.Validations -Version 1.0.0
 ```
 
 ### Via .NET CLI
+
 ```bash
 dotnet add package Canducci.Validations --version 1.0.0
 ```
 
 ### Via PackageReference (csproj)
+
 ```xml
 <PackageReference Include="Canducci.Validations" Version="1.0.0" />
 ```
@@ -36,6 +39,7 @@ dotnet add package Canducci.Validations --version 1.0.0
 ## 🎯 Validações Disponíveis
 
 ### DateOrOptionalAttribute
+
 Valida se o valor é uma data válida (`DateTime` ou `DateOnly`) ou opcional (null).
 
 ```csharp
@@ -50,6 +54,7 @@ public class EventModel
 ```
 
 ### DateTimeOrOptionalAttribute
+
 Valida se o valor é um `DateTime` válido ou opcional (null).
 
 ```csharp
@@ -64,6 +69,7 @@ public class MeetingModel
 ```
 
 ### TimeOrOptionalAttribute
+
 Valida se o valor é um horário válido (`TimeSpan` ou `TimeOnly`) ou opcional (null).
 
 ```csharp
@@ -82,6 +88,7 @@ public class ScheduleModel
 Para facilitar a inclusão dos scripts client-side, utilize o helper `ValidationScriptsHelper`:
 
 **No seu Layout ou View:**
+
 ```html
 @using Canducci.Validations.Helpers
 
@@ -90,6 +97,7 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 ```
 
 **Scripts incluídos automaticamente:**
+
 - `dayjs.min.js` - Biblioteca Day.js para manipulação de datas
 - `jquery.validate.config.js` - Configuração do jQuery Validation
 - `jquery.validate.dateoroptional.js` - Validação client-side para DateOrOptional
@@ -97,6 +105,7 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 - `jquery.validate.timeoroptional.js` - Validação client-side para TimeOrOptional
 
 **Uso em View específica:**
+
 ```html
 @page
 @model AppointmentModel
@@ -137,6 +146,7 @@ public class AppointmentModel
 ```
 
 **Controller:**
+
 ```csharp
 [HttpPost]
 public IActionResult CreateAppointment(AppointmentModel model)
@@ -152,6 +162,7 @@ public IActionResult CreateAppointment(AppointmentModel model)
 ```
 
 **View:**
+
 ```html
 @model AppointmentModel
 
@@ -214,6 +225,7 @@ public class CustomDateModel
 ### ASP.NET Core MVC
 
 1. **Instalar o pacote:**
+
 ```bash
 dotnet add package Canducci.Validations --version 1.0.0
 ```
@@ -270,6 +282,7 @@ O projeto inclui **26 testes unitários completos** que cobrem:
 - ✅ Compatibilidade multi-framework
 
 **Executar testes:**
+
 ```bash
 cd Canducci.Validation.TestProject
 dotnet test
@@ -288,10 +301,12 @@ O pacote inclui suporte para **50+ idiomas** através dos scripts de localizaç�
 ## 📋 Formatos Padrão
 
 ### DateOrOptionalAttribute
+
 - `DD/MM/YYYY`
 - `YYYY-MM-DD`
 
 ### DateTimeOrOptionalAttribute
+
 - `DD/MM/YYYY`
 - `DD/MM/YYYY HH:mm`
 - `DD/MM/YYYY HH:mm:ss`
@@ -300,6 +315,7 @@ O pacote inclui suporte para **50+ idiomas** através dos scripts de localizaç�
 - `YYYY-MM-DD HH:mm:ss`
 
 ### TimeOrOptionalAttribute
+
 - `HH:mm`
 - `HH:mm:ss`
 
@@ -327,6 +343,7 @@ Contribuições são bem-vindas! Por favor:
 ## 📞 Suporte
 
 Para suporte e questões:
+
 - Abra uma **Issue** no GitHub
 - Consulte a **documentação de testes** para exemplos práticos
 
