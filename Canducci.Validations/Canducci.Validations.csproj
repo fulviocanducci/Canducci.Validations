@@ -1,7 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
       <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0</TargetFrameworks>
-	  <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+      <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <PackageId>Canducci.Validations</PackageId>
+      <Version>0.0.2</Version>
+      <Authors>Fúlvio Canducci</Authors>
+      <Company>Canducci</Company>
+      <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+      <PackageIcon>icon.png</PackageIcon>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
    </PropertyGroup>
    <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
@@ -14,5 +24,18 @@
       <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.3.0" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
       <Content Include="Scripts\**\*.js" Pack="true" PackagePath="wwwroot\lib\canducci-validations" CopyToOutputDirectory="PreserveNewest" />
-   </ItemGroup>   
+   </ItemGroup>
+
+   <ItemGroup>
+      <None Include="..\icon.png">
+         <Pack>True</Pack>
+         <PackagePath>\</PackagePath>
+      </None>
+   </ItemGroup>
+   <ItemGroup>      
+      <None Include="..\README.md">
+         <Pack>True</Pack>
+         <PackagePath>\</PackagePath>
+      </None>
+   </ItemGroup>
 </Project>
