@@ -20,7 +20,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult(null, validationContext);
 
             // Assert
-            Assert.AreEqual(ValidationResult.Success, result);
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid(new DateTime(2023, 12, 25));
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Canducci.Validation.TestProject
             // Act
 #if NET6_0_OR_GREATER
             var result = attribute.IsValid(new DateOnly(2023, 12, 25));
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
 #else
             // Skip test for older .NET versions
             Assert.IsTrue(true, "DateOnly not available in this .NET version");
@@ -65,7 +65,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("invalid-date");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new DateOrOptionalAttribute("DD-MM-YYYY", "MM/DD/YYYY");
             
             // Act & Assert
-            Assert.AreEqual(new[] { "DD-MM-YYYY", "MM/DD/YYYY" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "DD-MM-YYYY", "MM/DD/YYYY" }));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new DateOrOptionalAttribute();
             
             // Act & Assert
-            Assert.AreEqual(new[] { "DD/MM/YYYY", "YYYY-MM-DD" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "DD/MM/YYYY", "YYYY-MM-DD" }));
         }
 
         [Test]
@@ -99,8 +99,8 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult("invalid", validationContext);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Data personalizada inválida", result.ErrorMessage);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ErrorMessage, Is.EqualTo("Data personalizada inválida"));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         #endregion
@@ -132,7 +132,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult(null, validationContext);
 
             // Assert
-            Assert.AreEqual(ValidationResult.Success, result);
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid(new DateTime(2023, 12, 25, 15, 30, 45));
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("invalid-datetime");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new DateTimeOrOptionalAttribute("DD-MM-YYYY HH:mm", "MM/DD/YYYY HH:mm:ss");
 
             // Act & Assert
-            Assert.AreEqual(new[] { "DD-MM-YYYY HH:mm", "MM/DD/YYYY HH:mm:ss" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "DD-MM-YYYY HH:mm", "MM/DD/YYYY HH:mm:ss" }));
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new DateTimeOrOptionalAttribute();
 
             // Act & Assert
-            Assert.AreEqual(new[] { "DD/MM/YYYY", "DD/MM/YYYY HH:mm", "DD/MM/YYYY HH:mm:ss", "YYYY-MM-DD", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "DD/MM/YYYY", "DD/MM/YYYY HH:mm", "DD/MM/YYYY HH:mm:ss", "YYYY-MM-DD", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss" }));
         }
 
         [Test]
@@ -194,8 +194,8 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult("invalid", validationContext);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Data/Hora personalizada inválida", result.ErrorMessage);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ErrorMessage, Is.EqualTo("Data/Hora personalizada inválida"));
         }
 
         [Test]
@@ -209,7 +209,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         #endregion
@@ -227,7 +227,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult(null, validationContext);
 
             // Assert
-            Assert.AreEqual(ValidationResult.Success, result);
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid(new TimeSpan(14, 30, 45));
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -254,10 +254,10 @@ namespace Canducci.Validation.TestProject
             // Act
 #if NET6_0_OR_GREATER
             var result = attribute.IsValid(new TimeOnly(14, 30, 45));
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
 #else
             // Skip test for older .NET versions
-            Assert.IsTrue(true, "TimeOnly not available in this .NET version");
+            //Assert.That("TimeOnly not available in this .NET version");
 #endif
         }
 
@@ -272,7 +272,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("invalid-time");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -282,7 +282,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new TimeOrOptionalAttribute("HH:mm:ss", "HH:mm");
 
             // Act & Assert
-            Assert.AreEqual(new[] { "HH:mm:ss", "HH:mm" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "HH:mm:ss", "HH:mm" }));
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new TimeOrOptionalAttribute();
 
             // Act & Assert
-            Assert.AreEqual(new[] { "HH:mm", "HH:mm:ss" }, attribute.Formats);
+            Assert.That(attribute.Formats, Is.EqualTo(new[] { "HH:mm", "HH:mm:ss" }));
         }
 
         [Test]
@@ -306,8 +306,8 @@ namespace Canducci.Validation.TestProject
             var result = attribute.GetValidationResult("invalid", validationContext);
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Hora personalizada inválida", result.ErrorMessage);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ErrorMessage, Is.EqualTo("Hora personalizada inválida"));
         }
 
         [Test]
@@ -321,7 +321,7 @@ namespace Canducci.Validation.TestProject
             var result = attribute.IsValid("");
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         #endregion
@@ -339,9 +339,12 @@ namespace Canducci.Validation.TestProject
             // Act
             var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
 
-            // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsEmpty(validationResults);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
         }
 
         [Test]
@@ -355,9 +358,12 @@ namespace Canducci.Validation.TestProject
             // Act
             var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
 
-            // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsEmpty(validationResults);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
         }
 
         [Test]
@@ -371,9 +377,12 @@ namespace Canducci.Validation.TestProject
             // Act
             var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
 
-            // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsEmpty(validationResults);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
         }
 
         #endregion
