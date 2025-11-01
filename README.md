@@ -1,5 +1,7 @@
 # Canducci.Validations
 
+[![Canducci.Validations](https://github.com/fulviocanducci/Canducci.Validations/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/fulviocanducci/Canducci.Validations/actions/workflows/dotnet-desktop.yml)
+
 Pacote de validação customizadas para **ASP.NET Core MVC** e **.NET Standard** com suporte completo para validação client-side e server-side.
 
 ## 🚀 Características
