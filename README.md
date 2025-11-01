@@ -1,13 +1,13 @@
 # Canducci.Validations
 
-Pacote de validações customizadas para **ASP.NET Core MVC** e **.NET Standard**.
+Pacote de validaÃ§Ã£o customizadas para **ASP.NET Core MVC** e **.NET Standard**.
 
-- Funciona em **MVC** com validação client-side (jQuery Unobtrusive + Day.js)
-- Funciona em **Forms/Console** com validação server-side (DataAnnotations)
+- Funciona em **MVC** com valida? client-side (jQuery Unobtrusive + Day.js)
+- Funciona em **Forms/Console** com valida? server-side (DataAnnotations)
 
 ---
 
-## Instalação
+## Instala?
 
 Via NuGet:
 

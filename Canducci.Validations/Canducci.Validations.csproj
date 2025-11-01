@@ -4,7 +4,7 @@
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.0.2</Version>
+      <Version>0.0.3</Version>
       <Authors>Fúlvio Canducci</Authors>
       <Company>Canducci</Company>
       <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
@@ -23,17 +23,17 @@
       <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.3.0" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-      <Content Include="Scripts\**\*.js" Pack="true" PackagePath="wwwroot\lib\canducci-validations" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="Scripts\**\*.js" Pack="true" PackagePath="contentFiles\any\any\wwwroot\lib\canducci-validations\" />
+      <None Include="BuildTransitive\canducci-validations.targets" Pack="true" PackagePath="BuildTransitive\" />
    </ItemGroup>
-
    <ItemGroup>
       <None Include="..\icon.png">
          <Pack>True</Pack>
          <PackagePath>\</PackagePath>
       </None>
    </ItemGroup>
-   <ItemGroup>      
-      <None Include="..\README.md">
+   <ItemGroup>
+      <None Include="C:\Users\Fulvio\source\repos\Temp\New\SlnValidations\README.md" Link="README.md">
          <Pack>True</Pack>
          <PackagePath>\</PackagePath>
       </None>

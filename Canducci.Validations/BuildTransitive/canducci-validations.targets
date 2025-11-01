@@ -1,0 +1,15 @@
+<Project>
+   <Target Name="CopyCanducciValidationsJs" AfterTargets="Build" Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'">
+      <ItemGroup>
+         <_CanducciJsFiles Include="$(MSBuildThisFileDirectory)..\contentFiles\any\any\wwwroot\lib\canducci-validations\**\*.js" />
+      </ItemGroup>
+
+      <Message Text="Copiando JS da Canducci.Validations para wwwroot/lib/canducci-validations..." Importance="High" />
+
+      <Copy
+        SourceFiles="@(_CanducciJsFiles)"
+        DestinationFiles="@(_CanducciJsFiles->'$(ProjectDir)wwwroot\lib\canducci-validations\%(RecursiveDir)%(Filename)%(Extension)')"
+        SkipUnchangedFiles="true" />
+   </Target>
+</Project>
+
