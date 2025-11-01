@@ -22,9 +22,13 @@
    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net8.0'">
       <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.3.0" />
-      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-      <None Include="Scripts\**\*.js" Pack="true" PackagePath="contentFiles\any\any\wwwroot\lib\canducci-validations\" />
-      <None Include="BuildTransitive\canducci-validations.targets" Pack="true" PackagePath="BuildTransitive\" />
+      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />      
+   </ItemGroup>
+   <ItemGroup>
+      <None Include="$(ProjectDir)Scripts\**\*.js" Pack="true" PackagePath="contentFiles\any\any\wwwroot\lib\canducci-validations\" />
+      <None Include="$(ProjectDir)buildTransitive\Canducci.Validations.targets"
+      Pack="true"
+      PackagePath="buildTransitive\" />
    </ItemGroup>
    <ItemGroup>
       <None Include="..\icon.png">
@@ -37,5 +41,8 @@
          <Pack>True</Pack>
          <PackagePath>\</PackagePath>
       </None>
+   </ItemGroup>
+   <ItemGroup>
+     <None Update="buildTransitive\Canducci.Validations.targets" Pack="true" PackagePath="buildTransitive\" />
    </ItemGroup>
 </Project>
