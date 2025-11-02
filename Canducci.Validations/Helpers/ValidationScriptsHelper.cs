@@ -19,7 +19,8 @@ namespace Canducci.Validations.Helpers
 <script src=""/lib/canducci-validations/jquery.validate.datetimeoroptional.js""></script>
 <script src=""/lib/canducci-validations/jquery.validate.timeoroptional.js""></script>
 <script src=""/lib/canducci-validations/jquery.validate.cpforoptional.js""></script>
-<script src=""/lib/canducci-validations/jquery.validate.cnpjoroptional.js""></script>";
+<script src=""/lib/canducci-validations/jquery.validate.cnpjoroptional.js""></script>
+<script src=""/lib/canducci-validations/jquery.validate.cpfcnpjoroptional.js""></script>";
             return new HtmlString(scripts);
         }
     }
