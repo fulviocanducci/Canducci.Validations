@@ -12,6 +12,7 @@ namespace Canducci.Validations.Helpers
         {
             var scripts = @"
 <script src=""/lib/canducci-validations/dayjs.min.js""></script>
+<script src=""/lib/canducci-validations/plugin/customParseFormat.js""></script>
 <script src=""/lib/canducci-validations/jquery.validate.config.js""></script>
 <script src=""/lib/canducci-validations/jquery.validate.dateoroptional.js""></script>
 <script src=""/lib/canducci-validations/jquery.validate.datetimeoroptional.js""></script>
