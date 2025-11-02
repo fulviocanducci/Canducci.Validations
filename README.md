@@ -22,19 +22,19 @@ Pacote de validação customizadas para **ASP.NET Core MVC** e **.NET Standard**
 ### Via NuGet Package Manager
 
 ```bash
-Install-Package Canducci.Validations -Version 1.0.0
+Install-Package Canducci.Validations
 ```
 
 ### Via .NET CLI
 
 ```bash
-dotnet add package Canducci.Validations --version 1.0.0
+dotnet add package Canducci.Validations
 ```
 
 ### Via PackageReference (csproj)
 
 ```xml
-<PackageReference Include="Canducci.Validations" Version="1.0.0" />
+<PackageReference Include="Canducci.Validations"/>
 ```
 
 ## 🎯 Validações Disponíveis
@@ -84,6 +84,66 @@ public class ScheduleModel
 }
 ```
 
+### CpfOrOptionAttribute
+
+Valida se o valor é um CPF válido ou opcional (null). Aceita CPF com ou sem formatação.
+
+```csharp
+public class PersonModel
+{
+    [CpfOrOption]
+    public string? CPF { get; set; }
+    
+    [CpfOrOption(ErrorMessage = "CPF inválido")]
+    public string? PersonalCPF { get; set; }
+}
+```
+
+**CPF aceitos:**
+
+- `12345678901` (apenas dígitos)
+- `123.456.789-01` (com formatação)
+
+### CnpjOrOptionalAttribute
+
+Valida se o valor é um CNPJ válido ou opcional (null). Aceita CNPJ com ou sem formatação.
+
+```csharp
+public class CompanyModel
+{
+    [CnpjOrOptional]
+    public string? CNPJ { get; set; }
+    
+    [CnpjOrOptional(ErrorMessage = "CNPJ inválido")]
+    public string? CompanyCNPJ { get; set; }
+}
+```
+
+**CNPJ aceitos:**
+
+- `12345678000195` (apenas dígitos)
+- `12.345.678/0001-95` (com formatação)
+
+### CpfCnpjOrOptionalAttribute
+
+Valida se o valor é um CPF OU CNPJ válido ou opcional (null). Útil para campos que podem aceitar ambos os tipos de documento.
+
+```csharp
+public class DocumentModel
+{
+    [CpfCnpjOrOptional]
+    public string? Document { get; set; }
+    
+    [CpfCnpjOrOptional(ErrorMessage = "CPF ou CNPJ inválido")]
+    public string? PersonalOrCompanyDocument { get; set; }
+}
+```
+
+**Documentos aceitos:**
+
+- CPF: `12345678901` ou `123.456.789-01`
+- CNPJ: `12345678000195` ou `12.345.678/0001-95`
+
 ### Helper para Scripts de Validação
 
 Para facilitar a inclusão dos scripts client-side, utilize o helper `ValidationScriptsHelper`:
@@ -104,6 +164,10 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 - `jquery.validate.dateoroptional.js` - Validação client-side para DateOrOptional
 - `jquery.validate.datetimeoroptional.js` - Validação client-side para DateTimeOrOptional
 - `jquery.validate.timeoroptional.js` - Validação client-side para TimeOrOptional
+- `jquery.validate.cpforoptional.js` - Validação client-side para CpfOrOption
+- `jquery.validate.cnpjoroptional.js` - Validação client-side para CnpjOrOptional
+- `jquery.validate.cpfcnpjoroptional.js` - Validação client-side para CpfCnpjOrOptional
+- `validates.js` - Funções de validação CPF/CNPJ
 
 **Uso em View específica:**
 
@@ -143,6 +207,15 @@ public class AppointmentModel
     [Required]
     [DateTimeOrOptional]
     public DateTime? CreatedAt { get; set; }
+    
+    [CpfOrOption]
+    public string? ClientCPF { get; set; }
+    
+    [CnpjOrOptional]
+    public string? CompanyCNPJ { get; set; }
+    
+    [CpfCnpjOrOptional]
+    public string? PersonalOrCompanyDocument { get; set; }
 }
 ```
 
@@ -199,14 +272,59 @@ public IActionResult CreateAppointment(AppointmentModel model)
 O pacote gera automaticamente os atributos data-val para validação client-side:
 
 ```html
-<input type="text" 
-       name="AppointmentDate" 
-       data-val="true" 
-       data-val-date-or-optional="Date inválid" 
+<!-- Date Validation -->
+<input type="text"
+       name="AppointmentDate"
+       data-val="true"
+       data-val-date-or-optional="Date inválid"
        data-val-date-or-optional-formats="DD/MM/YYYY,YYYY-MM-DD" />
+
+<!-- CPF Validation -->
+<input type="text"
+       name="ClientCPF"
+       data-val="true"
+       data-val-cpf-or-optional="CPF inválid" />
+
+<!-- CNPJ Validation -->
+<input type="text"
+       name="CompanyCNPJ"
+       data-val="true"
+       data-val-cnpj-or-optional="CNPJ inválid" />
+
+<!-- CPF/CNPJ Validation -->
+<input type="text"
+       name="PersonalOrCompanyDocument"
+       data-val="true"
+       data-val-cpfcnpj-or-optional="CPF ou CNPJ inválid" />
 ```
 
-### 3. Formatos Personalizados
+### 3. Formulário Completo com Validação CPF/CNPJ
+
+```csharp
+public class CustomerModel
+{
+    [Required]
+    [StringLength(100)]
+    public string Name { get; set; }
+    
+    [CpfOrOption]
+    public string? CPF { get; set; }
+    
+    [CnpjOrOptional]
+    public string? CNPJ { get; set; }
+    
+    [CpfCnpjOrOptional]
+    public string? Document { get; set; }
+    
+    [DateOrOptional]
+    public DateTime? BirthDate { get; set; }
+    
+    [TimeOrOptional]
+    public TimeSpan? PreferredTime { get; set; }
+}
+```
+
+### 4. Formatos Personalizados (Data)
 
 ```csharp
 public class CustomDateModel
@@ -218,6 +336,56 @@ public class CustomDateModel
     // Formatos padrão: "DD/MM/YYYY", "YYYY-MM-DD"
     [DateOrOptional]
     public DateOnly? DefaultDate { get; set; }
+}
+```
+
+### 5. Exemplo de Formulário Web
+
+```html
+@model CustomerModel
+
+<form asp-action="CreateCustomer">
+    <div>
+        <label asp-for="Name">Nome:</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    
+    <div>
+        <label asp-for="CPF">CPF (opcional):</label>
+        <input asp-for="CPF" placeholder="000.000.000-00" />
+        <span asp-validation-for="CPF"></span>
+    </div>
+    
+    <div>
+        <label asp-for="CNPJ">CNPJ (opcional):</label>
+        <input asp-for="CNPJ" placeholder="00.000.000/0000-00" />
+        <span asp-validation-for="CNPJ"></span>
+    </div>
+    
+    <div>
+        <label asp-for="Document">CPF ou CNPJ:</label>
+        <input asp-for="Document" placeholder="000.000.000-00 ou 00.000.000/0000-00" />
+        <span asp-validation-for="Document"></span>
+    </div>
+    
+    <div>
+        <label asp-for="BirthDate">Data de Nascimento (opcional):</label>
+        <input asp-for="BirthDate" />
+        <span asp-validation-for="BirthDate"></span>
+    </div>
+    
+    <div>
+        <label asp-for="PreferredTime">Horário Preferido (opcional):</label>
+        <input asp-for="PreferredTime" />
+        <span asp-validation-for="PreferredTime"></span>
+    </div>
+    
+    <button type="submit">Cadastrar</button>
+</form>
+
+@section Scripts {
+    @Html.AddValidationScripts()
 }
 ```
 
@@ -237,50 +405,107 @@ dotnet add package Canducci.Validations --version 1.0.0
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using Canducci.Validations.Attributes;
 
 public class Program
 {
     static void Main()
     {
-        var model = new SampleModel 
-        { 
-            EventDate = DateTime.Now 
-        };
+        // Testando validação CPF
+        var cpfModel = new PersonModel { CPF = "123.456.789-09" };
+        var cpfContext = new ValidationContext(cpfModel);
+        var cpfResults = new List<ValidationResult>();
+        bool cpfValid = Validator.TryValidateObject(cpfModel, cpfContext, cpfResults, true);
         
-        var context = new ValidationContext(model);
-        var results = new List<ValidationResult>();
-        
-        bool isValid = Validator.TryValidateObject(model, context, results, true);
-        
-        if (!isValid)
+        Console.WriteLine($"CPF válido: {cpfValid}");
+        if (!cpfValid)
         {
-            foreach (var result in results)
+            foreach (var result in cpfResults)
             {
-                Console.WriteLine($"Erro: {result.ErrorMessage}");
+                Console.WriteLine($"Erro CPF: {result.ErrorMessage}");
+            }
+        }
+        
+        // Testando validação CNPJ
+        var cnpjModel = new CompanyModel { CNPJ = "12.345.678/0001-95" };
+        var cnpjContext = new ValidationContext(cnpjModel);
+        var cnpjResults = new List<ValidationResult>();
+        bool cnpjValid = Validator.TryValidateObject(cnpjModel, cnpjContext, cnpjResults, true);
+        
+        Console.WriteLine($"CNPJ válido: {cnpjValid}");
+        if (!cnpjValid)
+        {
+            foreach (var result in cnpjResults)
+            {
+                Console.WriteLine($"Erro CNPJ: {result.ErrorMessage}");
+            }
+        }
+        
+        // Testando validação CPF ou CNPJ
+        var documentModel = new DocumentModel { Document = "12345678901" };
+        var documentContext = new ValidationContext(documentModel);
+        var documentResults = new List<ValidationResult>();
+        bool documentValid = Validator.TryValidateObject(documentModel, documentContext, documentResults, true);
+        
+        Console.WriteLine($"Documento válido: {documentValid}");
+        if (!documentValid)
+        {
+            foreach (var result in documentResults)
+            {
+                Console.WriteLine($"Erro Documento: {result.ErrorMessage}");
             }
         }
     }
 }
 
-public class SampleModel
+public class PersonModel
 {
-    [DateOrOptional]
-    public DateTime? EventDate { get; set; }
+    [CpfOrOption]
+    public string? CPF { get; set; }
+}
+
+public class CompanyModel
+{
+    [CnpjOrOptional]
+    public string? CNPJ { get; set; }
+}
+
+public class DocumentModel
+{
+    [CpfCnpjOrOptional]
+    public string? Document { get; set; }
 }
 ```
 
 ## 🧪 Testes
 
-O projeto inclui **26 testes unitários completos** que cobrem:
+O projeto inclui **30+ testes unitários completos** que cobrem:
+
+**Testes de Data/Hora:**
 
 - ✅ Validação com valores nulos
 - ✅ Validação com tipos válidos (DateTime, DateOnly, TimeSpan, TimeOnly)
 - ✅ Validação com valores inválidos
 - ✅ Configuração de formatos personalizados
 - ✅ Mensagens de erro personalizadas
+
+**Testes de CPF/CNPJ:**
+
+- ✅ Validação CPF com formatação (123.456.789-09)
+- ✅ Validação CPF sem formatação (12345678909)
+- ✅ Validação CPF inválido
+- ✅ Validação CNPJ com formatação (12.345.678/0001-95)
+- ✅ Validação CNPJ sem formatação (12345678000195)
+- ✅ Validação CNPJ inválido
+- ✅ Validação CPF/CNPJ combinado
+- ✅ Validação com valores nulos/ vazios
+
+**Gerais:**
+
 - ✅ Integração com validação de modelo
 - ✅ Compatibilidade multi-framework
+- ✅ Validação client-side e server-side
 
 **Executar testes:**
 
@@ -320,10 +545,32 @@ O pacote inclui suporte para **50+ idiomas** através dos scripts de localizaç�
 - `HH:mm`
 - `HH:mm:ss`
 
+### CPF/CNPJ Validation
+
+**CPF (CpfOrOptionAttribute):**
+
+- Aceita: `12345678901` (11 dígitos)
+- Aceita: `123.456.789-09` (com formatação)
+- Rejeita: Números inválidos ou com menos/mais de 11 dígitos
+
+**CNPJ (CnpjOrOptionalAttribute):**
+
+- Aceita: `12345678000195` (14 dígitos)
+- Aceita: `12.345.678/0001-95` (com formatação)
+- Rejeita: Números inválidos ou com menos/mais de 14 dígitos
+
+**CPF ou CNPJ (CpfCnpjOrOptionalAttribute):**
+
+- Aceita: Qualquer CPF válido
+- Aceita: Qualquer CNPJ válido
+- Rejeita: Documentos inválidos em ambos os formatos
+
 ## 🔗 Dependências
 
 - **.NET 6.0+** ou **.NET Standard 2.1+**
 - **jQuery** (para validação client-side)
+- **jQuery Validation** (plugin de validação)
+- **jQuery Validation Unobtrusive** (integração com ASP.NET Core)
 - **Day.js** (para validação de data client-side)
 - **Microsoft.AspNetCore.Mvc.ModelBinding.Validation** (para .NET 6.0+)
 
@@ -351,3 +598,16 @@ Para suporte e questões:
 ---
 
 **Desenvolvido com ❤️ pela comunidade .NET**
+
+## 📝 Changelog
+
+### Versão 0.0.8+
+
+- ✅ Adicionadas validações de CPF (`CpfOrOptionAttribute`)
+- ✅ Adicionadas validações de CNPJ (`CnpjOrOptionalAttribute`)
+- ✅ Adicionadas validações de CPF/CNPJ combinado (`CpfCnpjOrOptionalAttribute`)
+- ✅ Implementadas validações client-side para CPF/CNPJ
+- ✅ Scripts JavaScript para validação CPF/CNPJ
+- ✅ Suporte a formatação com e sem pontuação
+- ✅ Integração completa com jQuery Validation
+- ✅ Testes unitários para todas as validações CPF/CNPJ
