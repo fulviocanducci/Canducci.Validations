@@ -4,7 +4,7 @@
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.0.5</Version>
+      <Version>0.0.6</Version>
       <Authors>Canducci</Authors>
       <Company>Canducci</Company>
       <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
@@ -13,36 +13,28 @@
       <PackageIcon>icon.png</PackageIcon>
       <PackageReadmeFile>README.md</PackageReadmeFile>
    </PropertyGroup>
+
    <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
    </ItemGroup>
+
    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'">
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
    </ItemGroup>
+
    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net8.0'">
       <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.3.0" />
-      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />      
+      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
    </ItemGroup>
+
    <ItemGroup>
-      <None Include="$(ProjectDir)Scripts\**\*.js" Pack="true" PackagePath="contentFiles\any\any\wwwroot\lib\canducci-validations\" />
-      <None Include="$(ProjectDir)buildTransitive\Canducci.Validations.targets"
-      Pack="true"
-      PackagePath="buildTransitive\" />
+      <None Include="Scripts\**\*.js" Pack="true" PackagePath="contentFiles/any/any/wwwroot/lib/canducci-validations/" />
+      <None Include="buildTransitive\Canducci.Validations.targets" Pack="true" PackagePath="buildTransitive/" />
    </ItemGroup>
+
    <ItemGroup>
-      <None Include="..\icon.png">
-         <Pack>True</Pack>
-         <PackagePath>\</PackagePath>
-      </None>
-   </ItemGroup>
-   <ItemGroup>
-      <None Include="..\README.md" Link="README.md">
-         <Pack>True</Pack>
-         <PackagePath>\</PackagePath>
-      </None>
-   </ItemGroup>
-   <ItemGroup>
-     <None Update="buildTransitive\Canducci.Validations.targets" Pack="true" PackagePath="buildTransitive\" />
+      <None Include="..\icon.png" Pack="true" PackagePath="/" />
+      <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="/" />
    </ItemGroup>
 </Project>
