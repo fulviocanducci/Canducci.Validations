@@ -4,7 +4,7 @@
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.0.7</Version>
+      <Version>0.0.8</Version>
       <Authors>Canducci</Authors>
       <Company>Canducci</Company>
       <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
