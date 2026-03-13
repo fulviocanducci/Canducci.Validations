@@ -123,8 +123,8 @@ public class CompanyModel
 
 - `12345678000195` (apenas dígitos)
 - `12.345.678/0001-95` (com formatação)
-- `12ABC34501DE45` (alfanumérico sem formatação)
-- `12.ABC.345/01DE-45` (alfanumérico com formatação)
+- `AAITM43FBQP620` (alfanumérico sem formatação)
+- `AA.ITM.43F/BQP6-20` (alfanumérico com formatação)
 
 ### CpfCnpjOrOptionalAttribute
 
@@ -145,7 +145,7 @@ public class DocumentModel
 
 - CPF: `12345678901` ou `123.456.789-01`
 - CNPJ numérico: `12345678000195` ou `12.345.678/0001-95`
-- CNPJ alfanumérico: `12ABC34501DE45` ou `12.ABC.345/01DE-45`
+- CNPJ alfanumérico: `AAITM43FBQP620` ou `AA.ITM.43F/BQP6-20`
 
 ### Helper para Scripts de Validação
 

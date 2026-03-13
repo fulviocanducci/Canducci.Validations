@@ -4,7 +4,7 @@
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.1.0</Version>      
+      <Version>0.1.1</Version>      
       <Authors>Canducci</Authors>
       <Company>Canducci</Company>
       <Description>Canducci Validations</Description>
