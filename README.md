@@ -154,7 +154,11 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 **No seu Layout ou View:**
 
 ```html
-@using Canducci.Validations.Helpers @* Injeção automática de todos os scripts necessários *@ @Html.AddValidationScripts()
+@using Canducci.Validations.Helpers 
+
+@* Injeção automática de todos os scripts necessários *@ 
+
+@Html.AddValidationScripts()
 ```
 
 **Scripts incluídos automaticamente:**
