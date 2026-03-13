@@ -48,7 +48,7 @@ public class EventModel
 {
     [DateOrOptional]
     public DateTime? EventDate { get; set; }
-    
+
     [DateOrOptional("DD-MM-YYYY", "YYYY-MM-DD")]
     public DateOnly? AlternativeDate { get; set; }
 }
@@ -63,7 +63,7 @@ public class MeetingModel
 {
     [DateTimeOrOptional]
     public DateTime? MeetingDateTime { get; set; }
-    
+
     [DateTimeOrOptional("DD-MM-YYYY HH:mm", "MM/DD/YYYY HH:mm:ss")]
     public DateTime? ScheduledTime { get; set; }
 }
@@ -78,7 +78,7 @@ public class ScheduleModel
 {
     [TimeOrOptional]
     public TimeSpan? WorkTime { get; set; }
-    
+
     [TimeOrOptional("HH:mm:ss")]
     public TimeOnly? EventTime { get; set; }
 }
@@ -93,7 +93,7 @@ public class PersonModel
 {
     [CpfOrOption]
     public string? CPF { get; set; }
-    
+
     [CpfOrOption(ErrorMessage = "CPF inválido")]
     public string? PersonalCPF { get; set; }
 }
@@ -106,14 +106,14 @@ public class PersonModel
 
 ### CnpjOrOptionalAttribute
 
-Valida se o valor é um CNPJ válido ou opcional (null). Aceita CNPJ com ou sem formatação.
+Valida se o valor é um CNPJ válido ou opcional (null). Aceita tanto o modelo tradicional numérico quanto o novo modelo alfanumérico, com ou sem formatação.
 
 ```csharp
 public class CompanyModel
 {
     [CnpjOrOptional]
     public string? CNPJ { get; set; }
-    
+
     [CnpjOrOptional(ErrorMessage = "CNPJ inválido")]
     public string? CompanyCNPJ { get; set; }
 }
@@ -123,17 +123,19 @@ public class CompanyModel
 
 - `12345678000195` (apenas dígitos)
 - `12.345.678/0001-95` (com formatação)
+- `12ABC34501DE45` (alfanumérico sem formatação)
+- `12.ABC.345/01DE-45` (alfanumérico com formatação)
 
 ### CpfCnpjOrOptionalAttribute
 
-Valida se o valor é um CPF OU CNPJ válido ou opcional (null). Útil para campos que podem aceitar ambos os tipos de documento.
+Valida se o valor é um CPF OU CNPJ válido ou opcional (null). Para CNPJ, aceita tanto o modelo tradicional numérico quanto o novo modelo alfanumérico. Útil para campos que podem aceitar ambos os tipos de documento.
 
 ```csharp
 public class DocumentModel
 {
     [CpfCnpjOrOptional]
     public string? Document { get; set; }
-    
+
     [CpfCnpjOrOptional(ErrorMessage = "CPF ou CNPJ inválido")]
     public string? PersonalOrCompanyDocument { get; set; }
 }
@@ -142,7 +144,8 @@ public class DocumentModel
 **Documentos aceitos:**
 
 - CPF: `12345678901` ou `123.456.789-01`
-- CNPJ: `12345678000195` ou `12.345.678/0001-95`
+- CNPJ numérico: `12345678000195` ou `12.345.678/0001-95`
+- CNPJ alfanumérico: `12ABC34501DE45` ou `12.ABC.345/01DE-45`
 
 ### Helper para Scripts de Validação
 
@@ -151,10 +154,7 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 **No seu Layout ou View:**
 
 ```html
-@using Canducci.Validations.Helpers
-
-@* Injeção automática de todos os scripts necessários *@
-@Html.AddValidationScripts()
+@using Canducci.Validations.Helpers @* Injeção automática de todos os scripts necessários *@ @Html.AddValidationScripts()
 ```
 
 **Scripts incluídos automaticamente:**
@@ -172,21 +172,15 @@ Para facilitar a inclusão dos scripts client-side, utilize o helper `Validation
 **Uso em View específica:**
 
 ```html
-@page
-@model AppointmentModel
-@{
-    ViewData["Title"] = "Criar Agendamento";
-}
+@page @model AppointmentModel @{ ViewData["Title"] = "Criar Agendamento"; }
 
 <h2>Criar Agendamento</h2>
 
 <form asp-action="CreateAppointment">
-    <!-- Campos do formulário -->
+  <!-- Campos do formulário -->
 </form>
 
-@section Scripts {
-    @Html.AddValidationScripts()
-}
+@section Scripts { @Html.AddValidationScripts() }
 ```
 
 ## 💻 Exemplos de Uso
@@ -199,21 +193,21 @@ public class AppointmentModel
     [Required]
     [DateOrOptional]
     public DateTime? AppointmentDate { get; set; }
-    
+
     [Required]
     [TimeOrOptional]
     public TimeSpan? AppointmentTime { get; set; }
-    
+
     [Required]
     [DateTimeOrOptional]
     public DateTime? CreatedAt { get; set; }
-    
+
     [CpfOrOption]
     public string? ClientCPF { get; set; }
-    
+
     [CnpjOrOptional]
     public string? CompanyCNPJ { get; set; }
-    
+
     [CpfCnpjOrOptional]
     public string? PersonalOrCompanyDocument { get; set; }
 }
@@ -230,7 +224,7 @@ public IActionResult CreateAppointment(AppointmentModel model)
         // Processar agendamento
         return RedirectToAction("Success");
     }
-    
+
     return View(model);
 }
 ```
@@ -241,29 +235,29 @@ public IActionResult CreateAppointment(AppointmentModel model)
 @model AppointmentModel
 
 <form asp-action="CreateAppointment">
-    <div>
-        <label asp-for="AppointmentDate"></label>
-        <input asp-for="AppointmentDate" />
-        <span asp-validation-for="AppointmentDate"></span>
-    </div>
-    
-    <div>
-        <label asp-for="AppointmentTime"></label>
-        <input asp-for="AppointmentTime" />
-        <span asp-validation-for="AppointmentTime"></span>
-    </div>
-    
-    <div>
-        <label asp-for="CreatedAt"></label>
-        <input asp-for="CreatedAt" />
-        <span asp-validation-for="CreatedAt"></span>
-    </div>
-    
-    <button type="submit">Criar Agendamento</button>
+  <div>
+    <label asp-for="AppointmentDate"></label>
+    <input asp-for="AppointmentDate" />
+    <span asp-validation-for="AppointmentDate"></span>
+  </div>
+
+  <div>
+    <label asp-for="AppointmentTime"></label>
+    <input asp-for="AppointmentTime" />
+    <span asp-validation-for="AppointmentTime"></span>
+  </div>
+
+  <div>
+    <label asp-for="CreatedAt"></label>
+    <input asp-for="CreatedAt" />
+    <span asp-validation-for="CreatedAt"></span>
+  </div>
+
+  <button type="submit">Criar Agendamento</button>
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }
 ```
 
@@ -273,29 +267,22 @@ O pacote gera automaticamente os atributos data-val para validação client-side
 
 ```html
 <!-- Date Validation -->
-<input type="text"
-       name="AppointmentDate"
-       data-val="true"
-       data-val-date-or-optional="Date inválid"
-       data-val-date-or-optional-formats="DD/MM/YYYY,YYYY-MM-DD" />
+<input
+  type="text"
+  name="AppointmentDate"
+  data-val="true"
+  data-val-date-or-optional="Date inválid"
+  data-val-date-or-optional-formats="DD/MM/YYYY,YYYY-MM-DD"
+/>
 
 <!-- CPF Validation -->
-<input type="text"
-       name="ClientCPF"
-       data-val="true"
-       data-val-cpf-or-optional="CPF inválid" />
+<input type="text" name="ClientCPF" data-val="true" data-val-cpf-or-optional="CPF inválid" />
 
 <!-- CNPJ Validation -->
-<input type="text"
-       name="CompanyCNPJ"
-       data-val="true"
-       data-val-cnpj-or-optional="CNPJ inválid" />
+<input type="text" name="CompanyCNPJ" data-val="true" data-val-cnpj-or-optional="CNPJ inválid" />
 
 <!-- CPF/CNPJ Validation -->
-<input type="text"
-       name="PersonalOrCompanyDocument"
-       data-val="true"
-       data-val-cpfcnpj-or-optional="CPF ou CNPJ inválid" />
+<input type="text" name="PersonalOrCompanyDocument" data-val="true" data-val-cpfcnpj-or-optional="CPF ou CNPJ inválid" />
 ```
 
 ### 3. Formulário Completo com Validação CPF/CNPJ
@@ -306,19 +293,19 @@ public class CustomerModel
     [Required]
     [StringLength(100)]
     public string Name { get; set; }
-    
+
     [CpfOrOption]
     public string? CPF { get; set; }
-    
+
     [CnpjOrOptional]
     public string? CNPJ { get; set; }
-    
+
     [CpfCnpjOrOptional]
     public string? Document { get; set; }
-    
+
     [DateOrOptional]
     public DateTime? BirthDate { get; set; }
-    
+
     [TimeOrOptional]
     public TimeSpan? PreferredTime { get; set; }
 }
@@ -332,7 +319,7 @@ public class CustomDateModel
     // Formatos personalizados para validação client-side
     [DateOrOptional("DD-MM-YYYY", "MM/DD/YYYY", "DD.MM.YYYY")]
     public DateTime? CustomDate { get; set; }
-    
+
     // Formatos padrão: "DD/MM/YYYY", "YYYY-MM-DD"
     [DateOrOptional]
     public DateOnly? DefaultDate { get; set; }
@@ -345,48 +332,46 @@ public class CustomDateModel
 @model CustomerModel
 
 <form asp-action="CreateCustomer">
-    <div>
-        <label asp-for="Name">Nome:</label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    
-    <div>
-        <label asp-for="CPF">CPF (opcional):</label>
-        <input asp-for="CPF" placeholder="000.000.000-00" />
-        <span asp-validation-for="CPF"></span>
-    </div>
-    
-    <div>
-        <label asp-for="CNPJ">CNPJ (opcional):</label>
-        <input asp-for="CNPJ" placeholder="00.000.000/0000-00" />
-        <span asp-validation-for="CNPJ"></span>
-    </div>
-    
-    <div>
-        <label asp-for="Document">CPF ou CNPJ:</label>
-        <input asp-for="Document" placeholder="000.000.000-00 ou 00.000.000/0000-00" />
-        <span asp-validation-for="Document"></span>
-    </div>
-    
-    <div>
-        <label asp-for="BirthDate">Data de Nascimento (opcional):</label>
-        <input asp-for="BirthDate" />
-        <span asp-validation-for="BirthDate"></span>
-    </div>
-    
-    <div>
-        <label asp-for="PreferredTime">Horário Preferido (opcional):</label>
-        <input asp-for="PreferredTime" />
-        <span asp-validation-for="PreferredTime"></span>
-    </div>
-    
-    <button type="submit">Cadastrar</button>
+  <div>
+    <label asp-for="Name">Nome:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+  </div>
+
+  <div>
+    <label asp-for="CPF">CPF (opcional):</label>
+    <input asp-for="CPF" placeholder="000.000.000-00" />
+    <span asp-validation-for="CPF"></span>
+  </div>
+
+  <div>
+    <label asp-for="CNPJ">CNPJ (opcional):</label>
+    <input asp-for="CNPJ" placeholder="00.000.000/0000-00" />
+    <span asp-validation-for="CNPJ"></span>
+  </div>
+
+  <div>
+    <label asp-for="Document">CPF ou CNPJ:</label>
+    <input asp-for="Document" placeholder="000.000.000-00 ou 00.000.000/0000-00" />
+    <span asp-validation-for="Document"></span>
+  </div>
+
+  <div>
+    <label asp-for="BirthDate">Data de Nascimento (opcional):</label>
+    <input asp-for="BirthDate" />
+    <span asp-validation-for="BirthDate"></span>
+  </div>
+
+  <div>
+    <label asp-for="PreferredTime">Horário Preferido (opcional):</label>
+    <input asp-for="PreferredTime" />
+    <span asp-validation-for="PreferredTime"></span>
+  </div>
+
+  <button type="submit">Cadastrar</button>
 </form>
 
-@section Scripts {
-    @Html.AddValidationScripts()
-}
+@section Scripts { @Html.AddValidationScripts() }
 ```
 
 ## 🔧 Configuração
@@ -417,7 +402,7 @@ public class Program
         var cpfContext = new ValidationContext(cpfModel);
         var cpfResults = new List<ValidationResult>();
         bool cpfValid = Validator.TryValidateObject(cpfModel, cpfContext, cpfResults, true);
-        
+
         Console.WriteLine($"CPF válido: {cpfValid}");
         if (!cpfValid)
         {
@@ -426,13 +411,13 @@ public class Program
                 Console.WriteLine($"Erro CPF: {result.ErrorMessage}");
             }
         }
-        
+
         // Testando validação CNPJ
-        var cnpjModel = new CompanyModel { CNPJ = "12.345.678/0001-95" };
+        var cnpjModel = new CompanyModel { CNPJ = "12.ABC.345/01DE-45" };
         var cnpjContext = new ValidationContext(cnpjModel);
         var cnpjResults = new List<ValidationResult>();
         bool cnpjValid = Validator.TryValidateObject(cnpjModel, cnpjContext, cnpjResults, true);
-        
+
         Console.WriteLine($"CNPJ válido: {cnpjValid}");
         if (!cnpjValid)
         {
@@ -441,13 +426,13 @@ public class Program
                 Console.WriteLine($"Erro CNPJ: {result.ErrorMessage}");
             }
         }
-        
+
         // Testando validação CPF ou CNPJ
         var documentModel = new DocumentModel { Document = "12345678901" };
         var documentContext = new ValidationContext(documentModel);
         var documentResults = new List<ValidationResult>();
         bool documentValid = Validator.TryValidateObject(documentModel, documentContext, documentResults, true);
-        
+
         Console.WriteLine($"Documento válido: {documentValid}");
         if (!documentValid)
         {
@@ -555,14 +540,16 @@ O pacote inclui suporte para **50+ idiomas** através dos scripts de localizaç�
 
 **CNPJ (CnpjOrOptionalAttribute):**
 
-- Aceita: `12345678000195` (14 dígitos)
-- Aceita: `12.345.678/0001-95` (com formatação)
-- Rejeita: Números inválidos ou com menos/mais de 14 dígitos
+- Aceita: `12345678000195` (14 caracteres numéricos)
+- Aceita: `12.345.678/0001-95` (numérico com formatação)
+- Aceita: `12ABC34501DE45` (14 caracteres alfanuméricos)
+- Aceita: `12.ABC.345/01DE-45` (alfanumérico com formatação)
+- Rejeita: valores inválidos ou com menos/mais de 14 caracteres alfanuméricos
 
 **CPF ou CNPJ (CpfCnpjOrOptionalAttribute):**
 
 - Aceita: Qualquer CPF válido
-- Aceita: Qualquer CNPJ válido
+- Aceita: Qualquer CNPJ válido, numérico ou alfanumérico
 - Rejeita: Documentos inválidos em ambos os formatos
 
 ## 🔗 Dependências
@@ -609,5 +596,6 @@ Para suporte e questões:
 - ✅ Implementadas validações client-side para CPF/CNPJ
 - ✅ Scripts JavaScript para validação CPF/CNPJ
 - ✅ Suporte a formatação com e sem pontuação
+- ✅ Suporte ao novo formato de CNPJ alfanumérico
 - ✅ Integração completa com jQuery Validation
 - ✅ Testes unitários para todas as validações CPF/CNPJ
