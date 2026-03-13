@@ -1,0 +1,16 @@
+﻿Rebuild started at 13:55...
+1>------ Rebuild All started: Project: Canducci.Validations, Configuration: Release Any CPU ------
+Restored C:\Temp\ca\Canducci.Validations\Canducci.Validation.TestProject\Canducci.Validation.TestProject.csproj (in 95 ms).
+Restored C:\Temp\ca\Canducci.Validations\Canducci.Validations\Canducci.Validations.csproj (in 117 ms).
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\netstandard2.1\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\netstandard2.0\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\net6.0\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\net7.0\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\net10.0\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\net8.0\Canducci.Validations.dll
+1>  Canducci.Validations -> C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\net9.0\Canducci.Validations.dll
+1>  Successfully created package 'C:\Temp\ca\Canducci.Validations\Canducci.Validations\bin\Release\Canducci.Validations.0.0.9.nupkg'.
+2>------ Rebuild All started: Project: Canducci.Validation.TestProject, Configuration: Release Any CPU ------
+2>  Canducci.Validation.TestProject -> C:\Temp\ca\Canducci.Validations\Canducci.Validation.TestProject\bin\Release\net8.0\Canducci.Validation.TestProject.dll
+========== Rebuild All: 2 succeeded, 0 failed, 0 skipped ==========
+========== Rebuild completed at 13:55 and took 10,882 seconds ==========
