@@ -393,7 +393,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new CnpjOrOptionalAttribute();
 
             // Act
-            var result = attribute.GetValidationResult("04.252.011/0001-10", new ValidationContext(new { }));
+            var result = attribute.GetValidationResult("D9.3JQ.NHR/08CI-92", new ValidationContext(new { }));
 
             // Assert
             Assert.That(result, Is.EqualTo(ValidationResult.Success));
@@ -406,7 +406,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new CnpjOrOptionalAttribute();
 
             // Act
-            var result = attribute.GetValidationResult("12.ABC.345/01DE-45", new ValidationContext(new { }));
+            var result = attribute.GetValidationResult("D9.3JQ.NHR/08CI-92", new ValidationContext(new { }));
 
             // Assert
             Assert.That(result, Is.EqualTo(ValidationResult.Success));
@@ -462,7 +462,7 @@ namespace Canducci.Validation.TestProject
             var attribute = new CpfCnpjOrOptionalAttribute();
 
             // Act
-            var result = attribute.GetValidationResult("12.ABC.345/01DE-45", new ValidationContext(new { }));
+            var result = attribute.GetValidationResult("D9.3JQ.NHR/08CI-92", new ValidationContext(new { }));
 
             // Assert
             Assert.That(result, Is.EqualTo(ValidationResult.Success));
@@ -582,7 +582,7 @@ namespace Canducci.Validation.TestProject
         public void CnpjOrOptionalAttribute_ValidationContext_WithValidAlphaNumericModel_ShouldPass()
         {
             // Arrange
-            var model = new TestCnpjModel { Document = "12.ABC.345/01DE-45" };
+            var model = new TestCnpjModel { Document = "AA.ITM.43F/BQP6-20" };
             var validationContext = new ValidationContext(model);
             var validationResults = new System.Collections.Generic.List<ValidationResult>();
 
@@ -618,7 +618,7 @@ namespace Canducci.Validation.TestProject
         public void CpfCnpjOrOptionalAttribute_ValidationContext_WithValidAlphaNumericCnpj_ShouldPass()
         {
             // Arrange
-            var model = new TestCpfCnpjModel { Document = "12.ABC.345/01DE-45" };
+            var model = new TestCpfCnpjModel { Document = "D9.3JQ.NHR/08CI-92" };
             var validationContext = new ValidationContext(model);
             var validationResults = new System.Collections.Generic.List<ValidationResult>();
 
