@@ -326,6 +326,163 @@ namespace Canducci.Validation.TestProject
 
         #endregion
 
+        #region CpfOrOptionAttribute Tests
+
+        [Test]
+        public void CpfOrOptionAttribute_WithNullValue_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CpfOrOptionAttribute();
+            var validationContext = new ValidationContext(new { });
+
+            // Act
+            var result = attribute.GetValidationResult(null, validationContext);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CpfOrOptionAttribute_WithValidCpf_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CpfOrOptionAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("529.982.247-25", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CpfOrOptionAttribute_WithInvalidCpf_ShouldReturnValidationError()
+        {
+            // Arrange
+            var attribute = new CpfOrOptionAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("529.982.247-24", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.Not.EqualTo(ValidationResult.Success));
+        }
+
+        #endregion
+
+        #region CnpjOrOptionalAttribute Tests
+
+        [Test]
+        public void CnpjOrOptionalAttribute_WithNullValue_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CnpjOrOptionalAttribute();
+            var validationContext = new ValidationContext(new { });
+
+            // Act
+            var result = attribute.GetValidationResult(null, validationContext);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CnpjOrOptionalAttribute_WithValidNumericCnpj_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("04.252.011/0001-10", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CnpjOrOptionalAttribute_WithValidAlphaNumericCnpj_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("12.ABC.345/01DE-45", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CnpjOrOptionalAttribute_WithInvalidCnpj_ShouldReturnValidationError()
+        {
+            // Arrange
+            var attribute = new CnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("04.252.011/0001-11", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.Not.EqualTo(ValidationResult.Success));
+        }
+
+        #endregion
+
+        #region CpfCnpjOrOptionalAttribute Tests
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_WithValidCpf_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CpfCnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("529.982.247-25", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_WithValidNumericCnpj_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CpfCnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("04.252.011/0001-10", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_WithValidAlphaNumericCnpj_ShouldReturnSuccess()
+        {
+            // Arrange
+            var attribute = new CpfCnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("12.ABC.345/01DE-45", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.EqualTo(ValidationResult.Success));
+        }
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_WithInvalidValue_ShouldReturnValidationError()
+        {
+            // Arrange
+            var attribute = new CpfCnpjOrOptionalAttribute();
+
+            // Act
+            var result = attribute.GetValidationResult("123", new ValidationContext(new { }));
+
+            // Assert
+            Assert.That(result, Is.Not.EqualTo(ValidationResult.Success));
+        }
+
+        #endregion
+
         #region Integration Tests
 
         [Test]
@@ -385,6 +542,96 @@ namespace Canducci.Validation.TestProject
             });
         }
 
+        [Test]
+        public void CpfOrOptionAttribute_ValidationContext_WithValidModel_ShouldPass()
+        {
+            // Arrange
+            var model = new TestCpfModel { Document = "529.982.247-25" };
+            var validationContext = new ValidationContext(model);
+            var validationResults = new System.Collections.Generic.List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
+        }
+
+        [Test]
+        public void CnpjOrOptionalAttribute_ValidationContext_WithValidNumericModel_ShouldPass()
+        {
+            // Arrange
+            var model = new TestCnpjModel { Document = "04.252.011/0001-10" };
+            var validationContext = new ValidationContext(model);
+            var validationResults = new System.Collections.Generic.List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
+        }
+
+        [Test]
+        public void CnpjOrOptionalAttribute_ValidationContext_WithValidAlphaNumericModel_ShouldPass()
+        {
+            // Arrange
+            var model = new TestCnpjModel { Document = "12.ABC.345/01DE-45" };
+            var validationContext = new ValidationContext(model);
+            var validationResults = new System.Collections.Generic.List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
+        }
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_ValidationContext_WithValidCpf_ShouldPass()
+        {
+            // Arrange
+            var model = new TestCpfCnpjModel { Document = "529.982.247-25" };
+            var validationContext = new ValidationContext(model);
+            var validationResults = new System.Collections.Generic.List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
+        }
+
+        [Test]
+        public void CpfCnpjOrOptionalAttribute_ValidationContext_WithValidAlphaNumericCnpj_ShouldPass()
+        {
+            // Arrange
+            var model = new TestCpfCnpjModel { Document = "12.ABC.345/01DE-45" };
+            var validationContext = new ValidationContext(model);
+            var validationResults = new System.Collections.Generic.List<ValidationResult>();
+
+            // Act
+            var isValid = Validator.TryValidateObject(model, validationContext, validationResults, true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isValid, Is.True);
+                Assert.That(validationResults, Is.Empty);
+            });
+        }
+
         #endregion
 
         #region Test Models
@@ -405,6 +652,24 @@ namespace Canducci.Validation.TestProject
         {
             [TimeOrOptional]
             public TimeSpan? OptionalTime { get; set; }
+        }
+
+        private class TestCpfModel
+        {
+            [CpfOrOption]
+            public string? Document { get; set; }
+        }
+
+        private class TestCnpjModel
+        {
+            [CnpjOrOptional]
+            public string? Document { get; set; }
+        }
+
+        private class TestCpfCnpjModel
+        {
+            [CpfCnpjOrOptional]
+            public string? Document { get; set; }
         }
 
         #endregion
