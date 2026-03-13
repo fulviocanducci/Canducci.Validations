@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
-      <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0</TargetFrameworks>
+      <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.0.8</Version>
+      <Version>0.0.9</Version>      
       <Authors>Canducci</Authors>
       <Company>Canducci</Company>
       <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
@@ -12,6 +12,9 @@
       <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
       <PackageIcon>icon.png</PackageIcon>
       <PackageReadmeFile>README.md</PackageReadmeFile>
+      <PackageProjectUrl>https://github.com/fulviocanducci/Canducci.Validations</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/fulviocanducci/Canducci.Validations</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
    </PropertyGroup>
 
    <ItemGroup>
