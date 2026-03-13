@@ -19,7 +19,7 @@ namespace Canducci.Validations.Attributes
                 return ValidationResult.Success;
 
             var input = value.ToString();
-            if (Validates.ValidateCpf(input) || Validates.ValidateCnpj(input))
+            if (Validates.ValidateCpf(input) || Validates.ValidateCnpj(input.ToCharArray()))
                 return ValidationResult.Success;
 
             return new ValidationResult(ErrorMessage ?? "CPF ou CNPJ invalid");

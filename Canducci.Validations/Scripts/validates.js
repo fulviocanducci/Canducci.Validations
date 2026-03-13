@@ -16,27 +16,54 @@
    return true;
 }
 
+
 function validateCNPJ(value) {
    if (!value) return false;
-   const cnpj = value.replace(/\D/g, '');
+   const cnpj = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
    if (cnpj.length !== 14) return false;
    if (/^(\d)\1{13}$/.test(cnpj)) return false;
-
-   const calcVerifier = (cnpjSlice, weights) => {
-      let sum = 0;
-      for (let i = 0; i < weights.length; i++) {
-         sum += parseInt(cnpjSlice.charAt(i), 10) * weights[i];
-      }
-      let r = sum % 11;
-      return r < 2 ? 0 : 11 - r;
+   const charToNumber = (c) => {
+      const code = c.charCodeAt(0);
+      if (code >= 48 && code <= 57) return code - 48;
+      return code;
    };
 
-   const firstWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-   const secondWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-
-   const firstDigit = calcVerifier(cnpj.slice(0, 12), firstWeights);
-   const secondDigit = calcVerifier(cnpj.slice(0, 12) + firstDigit, secondWeights);
-
-   return firstDigit === parseInt(cnpj.charAt(12), 10) &&
-      secondDigit === parseInt(cnpj.charAt(13), 10);
+   const calcVerifier = (base, weights) => {
+      let sum = 0;
+      for (let i = 0; i < weights.length; i++) {
+         sum += charToNumber(base[i]) * weights[i];
+      }
+      const r = sum % 11;
+      return r < 2 ? 0 : 11 - r;
+   };
+   const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+   const weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+   const dv1 = calcVerifier(cnpj.slice(0, 12), weights1);
+   const dv2 = calcVerifier(cnpj.slice(0, 12) + dv1, weights2);
+   return dv1 === Number(cnpj[12]) && dv2 === Number(cnpj[13]);
 }
+
+//function validateCNPJOld(value) {
+//   if (!value) return false;
+//   const cnpj = value.replace(/\D/g, '');
+//   if (cnpj.length !== 14) return false;
+//   if (/^(\d)\1{13}$/.test(cnpj)) return false;
+
+//   const calcVerifier = (cnpjSlice, weights) => {
+//      let sum = 0;
+//      for (let i = 0; i < weights.length; i++) {
+//         sum += parseInt(cnpjSlice.charAt(i), 10) * weights[i];
+//      }
+//      let r = sum % 11;
+//      return r < 2 ? 0 : 11 - r;
+//   };
+
+//   const firstWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+//   const secondWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+//   const firstDigit = calcVerifier(cnpj.slice(0, 12), firstWeights);
+//   const secondDigit = calcVerifier(cnpj.slice(0, 12) + firstDigit, secondWeights);
+
+//   return firstDigit === parseInt(cnpj.charAt(12), 10) &&
+//      secondDigit === parseInt(cnpj.charAt(13), 10);
+//}

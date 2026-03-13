@@ -4,10 +4,10 @@
       <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
       <PackageId>Canducci.Validations</PackageId>
-      <Version>0.0.9</Version>      
+      <Version>0.1.0</Version>      
       <Authors>Canducci</Authors>
       <Company>Canducci</Company>
-      <Description>Pacote de validações customizadas Canducci para MVC e Forms</Description>
+      <Description>Canducci Validations</Description>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
       <PackageIcon>icon.png</PackageIcon>
@@ -15,6 +15,9 @@
       <PackageProjectUrl>https://github.com/fulviocanducci/Canducci.Validations</PackageProjectUrl>
       <RepositoryUrl>https://github.com/fulviocanducci/Canducci.Validations</RepositoryUrl>
       <RepositoryType>git</RepositoryType>
+      <Title>Canducci.Validations</Title>
+      <PackageTags>validation;canducci;cpf;cnpj;date</PackageTags>
+      <PackageReleaseNotes>Pacote com o novo estilo do CNPJ.</PackageReleaseNotes>
    </PropertyGroup>
 
    <ItemGroup>

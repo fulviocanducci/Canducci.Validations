@@ -18,7 +18,7 @@ namespace Canducci.Validations.Attributes
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
                 return ValidationResult.Success;
 
-            return Validates.ValidateCnpj(value.ToString())
+            return Validates.ValidateCnpj(value.ToString().ToCharArray())
                 ? ValidationResult.Success
                 : new ValidationResult(ErrorMessage ?? "Cnpj inválid");
         }
